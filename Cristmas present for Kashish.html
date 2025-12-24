@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hey, My Friend 🌱</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6efe8;
+      --card: #fffaf5;
+      --accent: #ffb703;
+      --accent2: #8ecae6;
+      --text: #3a3a3a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(180deg, var(--bg), #fff);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-weight: 800;
+      font-size: 2.2rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      margin: 12px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn.secondary {
+      background: var(--accent2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 18px;
+      background: #fff;
+      animation: pop 0.4s ease;
+    }
+
+    .memory {
+      font-size: 1.05rem;
+      margin: 10px 0;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -10px;
+      font-size: 18px;
+      animation: floatUp linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card" id="screen1">
+      <h1>🎄 Merry Christmas, Kishuu 🌼</h1>
+      <p>
+        This page exists for one simple reason —<br>
+        to remind you how much your friendship means to me 
+      </p>
+      <button class="btn" onclick="nextScreen()">Start the journey ✨</button>
+    </div>
+
+    <div class="card hidden" id="screen2">
+      <h1>Why you’re irreplaceable 🧸</h1>
+      <p>Pick one. (There are no wrong choices. Trust me.)</p>
+      <button class="btn" onclick="showMessage(0)">You always listen</button>
+      <button class="btn secondary" onclick="showMessage(1)">You make bad days better</button>
+      <button class="btn" onclick="showMessage(2)">You’re effortlessly funny</button>
+
+      <div class="message hidden" id="messageBox"></div>
+
+      <button class="btn secondary" style="margin-top:20px" onclick="finalScreen()">One last thing 💛</button>
+    </div>
+
+    <div class="card hidden" id="screen3">
+      <h1>At least, I wanna say is 🌱</h1>
+      <p>
+        I don’t say this enough, Kashish, but I’m genuinely grateful for you.
+        For the laughs, the support, the chaos, and the comfort.
+        <br><br>
+        You make life lighter — and that’s not a small thing.
+        <br><br>
+        Merry Christmas, Kishuu 🎄✨ May your days be warm, soft, and full of little moments like this.
+      </p>
+      <button class="btn" onclick="spawnHearts()">Click for friendship magic 💖</button>
+      <div class="footer">Made with friendship, late-night thoughts, & a warm cup of vibes ☕</div>
+    </div>
+  </div>
+
+  <script>
+    const messages = [
+      "You listen — not just to reply, but to understand. That’s rare and it matters.",
+      "Somehow, things feel less heavy when you’re around. That’s a superpower.",
+      "Your humor? Accidentally therapeutic. 10/10 would laugh again."
+    ];
+
+    function nextScreen() {
+      document.getElementById('screen1').classList.add('hidden');
+      document.getElementById('screen2').classList.remove('hidden');
+    }
+
+    function showMessage(index) {
+      const box = document.getElementById('messageBox');
+      box.innerText = messages[index];
+      box.classList.remove('hidden');
+      spawnHearts(5);
+    }
+
+    function finalScreen() {
+      document.getElementById('screen2').classList.add('hidden');
+      document.getElementById('screen3').classList.remove('hidden');
+    }
+
+    function spawnHearts(count = 15) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerText = '💛';
+        heart.style.left = Math.random() * 500 + 'vw';
+        heart.style.animationDuration = 3 + Math.random() * 3 + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+  </script>
+
+</body>
+</html>
